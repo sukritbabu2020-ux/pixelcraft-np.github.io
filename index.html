@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PixelCraft | Web Designer</title>
+<link rel="icon" href="favicon.ico" type="image/x-icon">
+
+<link rel="stylesheet" href="css/ntb-gov.css">
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Text:wght@400;600;700&amp;display=swap" rel="stylesheet">
+
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+</head>
+<body>
+    <!-- Custom Cursor Canvas -->
+    <canvas class="cursor"></canvas>
+    
+    <!-- Navigation -->
+    <nav class="nav">
+        <div class="container">
+            <div class="logo-container cursor-link">
+                <img src="logo.png" alt="PixelCraft Logo" class="logo-img">
+                <span>PixelCraft</span>
+            </div>
+
+
+
+
+
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="hero-title">
+                    Crafting <span class="gradient">Digital</span><br>Experiences
+                </h1>
+                <p class="hero-desc">Clean, modern websites with smooth animations and exceptional user experience.</p>
+                <a href="#projects" class="cta-btn cursor-link">View Projects</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about" id="about">
+        <div class="container">
+            <h2 class="section-title">About Me</h2>
+            <div class="about-grid">
+                <div class="about-text">
+                    <p>Web designer creating minimal, elegant websites that feel alive. Specializing in smooth animations, modern UI/UX, and performance.</p>
+                    <p>Transforming ideas into digital reality with clean code and beautiful design.</p>
+                </div>
+                <div class="about-image">
+                    <div class="image-placeholder"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Portal -->
+    <section class="projects" id="projects">
+        <div class="container">
+            <h2 class="section-title">Project Portal</h2>
+            <p class="section-subtitle">Submit your vision. Files auto-email directly to me.</p>
+            <form class="project-form" id="projectForm">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>Name</label>
+                        <input type="text" name="clientName" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" name="user_email" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Project Description</label>
+                    <textarea name="projectDesc" rows="5" placeholder="Tell me about your project vision..." required></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Budget (NPR 15,000 - 50,000)</label>
+                    <input type="number" name="budget" min="15000" max="50000" step="1000" placeholder="Enter budget">
+                </div>
+                <div class="form-group">
+                    <label>Upload Files</label>
+                    <input type="file" name="files" multiple accept="image/*,video/*,.pdf">
+                    <div class="file-preview"></div>
+                </div>
+                <button type="submit" class="submit-btn cursor-link">Submit Project</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Success Modal -->
+    <div id="successModal" class="modal">
+        <div class="modal-content">
+            <h3>✅ Success!</h3>
+            <p>Project submitted! Check your email for confirmation.</p>
+            <button id="closeModal" class="cursor-link">Close</button>
+        </div>
+    </div>
+
+    <!-- Reviews & Contact Section -->
+    <section class="contact" id="contact">
+        <div class="container">
+            <h2 class="section-title">Reviews & Contact</h2>
+            <div class="contact-grid">
+                <div class="reviews-section">
+                    <h3>Leave a Review</h3>
+                    <form class="review-form" id="reviewForm">
+                        <div class="form-group">
+                            <label>Name</label>
+                            <input type="text" name="reviewName" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Email</label>
+                            <input type="email" name="reviewEmail" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Review</label>
+                            <textarea name="reviewText" rows="4" placeholder="Share your experience..." required></textarea>
+                        </div>
+                        <button type="submit" class="submit-btn">Submit Review</button>
+                    </form>
+                    <div id="reviews-display" class="reviews-list"></div>
+                    
+                    <div class="sample-reviews">
+                        <div class="review-item">
+                            <div class="review-header">
+                                <strong>John Doe</strong>
+                                <span class="stars">★★★★★</span>
+                                <small>2 days ago</small>
+                            </div>
+                            <p>Amazing work! Delivered on time with stunning design.</p>
+                        </div>
+                        <div class="review-item">
+                            <div class="review-header">
+                                <strong>Jane Smith</strong>
+                                <span class="stars">★★★★☆</span>
+                                <small>1 week ago</small>
+                            </div>
+                            <p>Excellent communication and beautiful results!</p>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="contact-info">
+                    <h3>Get Help</h3>
+                    <div class="contact-cards">
+                        <a href="mailto:creatorofwebsites57@gmail.com" class="contact-card email-card">
+                            <svg width="48" height="48" viewBox="0 0 24 24" fill="#11998e">
+                                <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+                            </svg>
+                            <h4>Email</h4>
+                            <p>creatorofwebsites57@gmail.com</p>
+                        </a>
+                        <a href="https://wa.me/9779841224347" class="contact-card whatsapp-card" target="_blank">
+                            <svg width="48" height="48" viewBox="0 0 24 24" fill="#25D366">
+                                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.446l-.232-.139-3.527.816a.832.832 0 01-.945-.38l-.28-.557a.852.852 0 01-.131-.605l.107-1.433a9.537 9.87 0 01.713-3.338l-.778-.851a9.537 9.87 0 01-1.371-3.201l-.102-.795a.832.832 0 01.384-.785l1.441-.66a9.537 9.87 0 011.156-1.515l.391-.5a.832.832 0 01.745.087l.878.931a9.537 9.87 0 013.337.873l.011-.011a9.537 9.87 0 013.745.784l.882.93a.832. WhatsApp
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="js/script.js"></script>
+</body>
+</html> 
+
+[Please review the diff. You should ignore if you have introduced any redundant indendation issues / redundant blank lines or no formatting issues as long as it does not impact the logic/ build.]
+Important: You should ignore if you have introduced any redundant indendation issues / redundant blank lines or formatting issues as long as it does not impact the logic/ build. 
+
+Assistant:  {# Review the diff. Good: budget added, user-select fixed. Still need #3 reviews/contact replacement. }
+
+<xai:function_call name="edit_file">
+<parameter name="path">C:/Users/Lenovo/Desktop/pixelcraft-portfolio/index.html
+
