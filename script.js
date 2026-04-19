@@ -1,122 +1,189 @@
-// Particle background
-function initParticles() {
-    const canvas = document.getElementById('particles');
-    const ctx = canvas.getContext('2d');
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
+// EmailJS Config - Replace with your keys from emailjs.com
+const EMAILJS_SERVICE_ID = 'service_uyr02n6';
+const EMAILJS_TEMPLATE_ID_PROJECT = 'template_7cg7swe';
+const EMAILJS_TEMPLATE_ID_CONTACT = 'template_7cg7swe';
+const EMAILJS_PUBLIC_KEY = 't75xSem6xvpZdIQiX';
 
-    const particles = [];
-    const numParticles = 150;
+emailjs.init(EMAILJS_PUBLIC_KEY);
 
-    for (let i = 0; i < numParticles; i++) {
-        particles.push({
-            x: Math.random() * canvas.width,
-            y: Math.random() * canvas.height,
-            vx: (Math.random() - 0.5) * 0.5,
-            vy: (Math.random() - 0.5) * 0.5,
-            radius: Math.random() * 2 + 1,
-            color: `hsl(${Math.random() * 60 + 180}, 100%, 50%)`
-        });
-    }
+// GSAP Setup - commented for NTB style
+// gsap.registerPlugin(ScrollTrigger);
 
-    function animate() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        
-        particles.forEach(p => {
-            p.x += p.vx;
-            p.y += p.vy;
-            
-            if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
-            if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
-            
-            ctx.beginPath();
-            ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-            ctx.fillStyle = p.color;
-            ctx.fill();
-        });
-        
-        requestAnimationFrame(animate);
-    }
-    animate();
-
-    window.addEventListener('resize', () => {
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-    });
+// Custom Cursor
+function initCursor() {
+    // Disabled for NTB gov style - standard cursors only
 }
 
-// Smooth scroll
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
-        target.scrollIntoView({ behavior: 'smooth' });
-    });
-});
+// Hero Animations
+function initHeroAnimations() {
+    // GSAP disabled for NTB gov style
+}
 
-// Form handling
-document.getElementById('reg-form').addEventListener('submit', function(e) {
-    e.preventDefault();
-    const name = document.getElementById('name').value;
-    const email = document.getElementById('email').value;
-    const desc = document.getElementById('project-desc').value;
+// Scroll Animations
+function initScrollAnimations() {
+    // Vanilla IntersectionObserver for subtle fade-up
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0)';
+            }
+        });
+    }, { threshold: 0.1 });
     
-    alert(`Thank you, ${name}! Your registration has been submitted. We\\'ll contact you at ${email} shortly. Project: ${desc}`);
-    this.reset();
-});
-
-// Media Vault
-const dropZone = document.getElementById('drop-zone');
-const fileInput = document.getElementById('file-input');
-const fileList = document.getElementById('file-list');
-
-dropZone.addEventListener('click', () => fileInput.click());
-
-dropZone.addEventListener('dragover', (e) => {
-    e.preventDefault();
-    dropZone.classList.add('dragover');
-});
-
-dropZone.addEventListener('dragleave', () => {
-    dropZone.classList.remove('dragover');
-});
-
-dropZone.addEventListener('drop', (e) => {
-    e.preventDefault();
-    dropZone.classList.remove('dragover');
-    const files = e.dataTransfer.files;
-    handleFiles(files);
-});
-
-fileInput.addEventListener('change', (e) => {
-    handleFiles(e.target.files);
-});
-
-function handleFiles(files) {
-    Array.from(files).forEach(file => {
-        const div = document.createElement('div');
-        div.className = 'file-item';
-        div.innerHTML = `
-            <span>${file.name} (${(file.size / 1024 / 1024).toFixed(2)} MB)</span>
-            <button onclick="this.parentElement.remove()">Remove</button>
-        `;
-        fileList.appendChild(div);
+    document.querySelectorAll('section').forEach(section => {
+        section.style.opacity = '0';
+        section.style.transform = 'translateY(20px)';
+        section.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+        observer.observe(section);
     });
 }
 
-// Scroll animations
-function handleScroll() {
-    const sections = document.querySelectorAll('.section');
-    sections.forEach(section => {
-        const rect = section.getBoundingClientRect();
-        if (rect.top < window.innerHeight - 100) {
-            section.classList.add('visible');
+// File Preview
+function initFilePreview() {
+    const fileInput = document.querySelector('input[type="file"]');
+    const preview = document.querySelector('.file-preview');
+    
+    fileInput?.addEventListener('change', (e) => {
+        preview.innerHTML = '';
+        Array.from(e.target.files).slice(0, 6).forEach(file => {
+            if (file.type.startsWith('image/')) {
+                const img = document.createElement('img');
+                img.src = URL.createObjectURL(file);
+                preview.appendChild(img);
+            }
+        });
+    });
+}
+
+// Form Handling
+function initForms() {
+    const projectForm = document.getElementById('projectForm');
+    const reviewForm = document.getElementById('reviewForm');
+    
+    async function submitForm(form, templateId) {
+        const btn = form.querySelector('button[type="submit"]');
+        const originalText = btn.textContent;
+        
+        try {
+            btn.textContent = 'Sending...';
+            btn.disabled = true;
+            
+            const formData = new FormData(form);
+            const files = formData.getAll('files');
+            const filesList = files.length ? Array.from(files).map(f => f.name).join(', ') : 'None';
+            const budget = formData.get('budget') || 'Not specified';
+            
+            const params = {
+                clientName: formData.get('clientName'),
+                user_email: formData.get('user_email'),
+                projectDesc: formData.get('projectDesc') || formData.get('message'),
+                budget: budget,
+                files: filesList
+            };
+            
+            await emailjs.send(EMAILJS_SERVICE_ID, templateId, params);
+            showModal();
+            form.reset();
+            document.querySelector('.file-preview').innerHTML = '';
+        } catch (error) {
+            console.error('EmailJS Error:', error);
+            alert('Please setup EmailJS or email creatorofwebsites57@gmail.com directly');
+        } finally {
+            btn.textContent = originalText;
+            btn.disabled = false;
+        }
+    }
+    
+    projectForm?.addEventListener('submit', (e) => {
+        e.preventDefault();
+        submitForm(projectForm, EMAILJS_TEMPLATE_ID_PROJECT);
+    });
+    
+    reviewForm?.addEventListener('submit', (e) => {
+        e.preventDefault();
+        submitReview(reviewForm);
+    });
+}
+
+function showModal() {
+    const modal = document.getElementById('successModal');
+    modal.classList.add('active');
+    
+    setTimeout(() => modal.classList.remove('active'), 3000);
+}
+
+function submitReview(form) {
+    const formData = new FormData(form);
+    const review = {
+        name: formData.get('reviewName'),
+        email: formData.get('reviewEmail'),
+        text: formData.get('reviewText'),
+        date: new Date().toLocaleDateString()
+    };
+
+    // Local storage (admin approval pending)
+    let reviews = JSON.parse(localStorage.getItem('reviews') || '[]');
+    reviews.unshift({...review, pending: true});
+    localStorage.setItem('reviews', JSON.stringify(reviews.slice(0,5))); // Max 5
+
+    // Send to EmailJS
+    const params = {
+        reviewName: review.name,
+        reviewEmail: review.email,
+        reviewText: review.text
+    };
+    
+    emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID_PROJECT, params).catch(console.error);
+    
+    displayReviews();
+    form.reset();
+    showModal();
+}
+
+function displayReviews() {
+    const container = document.getElementById('reviews-display');
+    const reviews = JSON.parse(localStorage.getItem('reviews') || '[]');
+    
+    container.innerHTML = reviews.map(r => `
+        <div class="review-item ${r.pending ? 'pending' : ''}">
+            <strong>${r.name}</strong> <small>${r.date}</small>
+            <p>${r.text}</p>
+            ${r.pending ? '<small>Pending approval</small>' : ''}
+        </div>
+    `).join('');
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    displayReviews();
+});
+
+document.getElementById('closeModal')?.addEventListener('click', () => {
+    document.getElementById('successModal').classList.remove('active');
+});
+
+// Smooth Scroll
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', e => {
+        e.preventDefault();
+        const target = document.querySelector(anchor.getAttribute('href'));
+        target?.scrollIntoView({ behavior: 'smooth' });
+    });
+});
+
+// Initialize Everything
+document.addEventListener('DOMContentLoaded', () => {
+    initCursor();
+    // initHeroAnimations(); // Minimal for gov style
+    initScrollAnimations();
+    initFilePreview();
+    initForms();
+    
+    // Modal backdrop close
+    document.getElementById('successModal')?.addEventListener('click', e => {
+        if (e.target.classList.contains('modal')) {
+            e.target.classList.remove('active');
         }
     });
-}
+});
 
-window.addEventListener('scroll', handleScroll);
-
-// Init
-initParticles();
-handleScroll();

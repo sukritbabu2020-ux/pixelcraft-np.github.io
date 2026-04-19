@@ -230,93 +230,53 @@
                 Padding: 3rem for breathing room
                 Validation: required attributes + client-side
             -->
-            <form class="project-form" id="projectForm" novalidate>
-                <!-- 
-                    FORM GRID - 2-column name/email
-                    Gap: 2rem, stacks on mobile
-                -->
-                <div class="form-grid">
-                    <!-- 
-                        CLIENT NAME FIELD
-                        - required attribute
-                        - label properly associated
-                        - Focus ring cyan (#00f5ff)
-                    -->
-                    <div class="form-group">
-                        <label for="clientName">Name</label>
-                        <input type="text" 
-                               id="clientName" 
-                               name="clientName" 
-                               required 
-                               maxlength="100"
-                               aria-describedby="name-help">
-                        <small id="name-help" class="help-text">Full name or company name</small>
-                    </div>
-                    <!-- 
-                        EMAIL FIELD - Critical for response
-                        type="email" enables native validation
-                        pattern fallback for older browsers
-                    -->
-                    <div class="form-group">
-                        <label for="clientEmail">Email</label>
-                        <input type="email" 
-                               id="clientEmail" 
-                               name="user_email" 
-                               required 
-                               aria-describedby="email-help">
-                        <small id="email-help" class="help-text">We'll reply within 24 hours</small>
-                    </div>
-                </div>
-                <!-- 
-                    PROJECT DESCRIPTION - Large textarea
-                    rows="5" minimum height
-                    Placeholder guides user input
-                -->
-                <div class="form-group">
-                    <label for="projectDesc">Project Description</label>
-                    <textarea id="projectDesc" 
-                              name="projectDesc" 
-                              rows="5" 
-                              placeholder="Tell me about your project vision, goals, target audience, design preferences, timeline, budget range..." 
-                              required 
-                              maxlength="4000"
-                              aria-describedby="desc-help"></textarea>
-                    <small id="desc-help" class="help-text">The more details, the better quote!</small>
-                </div>
-                <!-- 
-                    FILE UPLOAD - Business critical feature
-                    multiple attribute for batch upload
-                    accept limits to relevant types
-                    Preview system shows selected files
-                -->
-                <div class="form-group">
-                    <label for="projectFiles">Upload Files (Optional)</label>
-                    <input type="file" 
-                           id="projectFiles" 
-                           name="files" 
-                           multiple 
-                           accept="image/*,video/mp4,video/webm,.pdf,.zip"
-                           aria-describedby="files-help">
-                    <!-- 
-                        FILE PREVIEW CONTAINER
-                        Dynamically populated by JS
-                        Flex wrap + thumbnails
-                    -->
-                    <div class="file-preview" aria-live="polite" role="status">
-                        No files selected
-                    </div>
-                    <small id="files-help" class="help-text">Screenshots, wireframes, moodboards (max 50MB total)</small>
-                </div>
-                <!-- 
-                    SUBMIT BUTTON - Full width, prominent
-                    Loading state handled by JS
-                    Visual feedback (shimmer + lift)
-                -->
-                <button type="submit" class="submit-btn cursor-link">
-                    <span class="btn-text">Submit Project →</span>
-                    <span class="btn-loading" aria-hidden="true">Sending...</span>
-                </button>
-            </form>
+         <form class="project-form" id="projectForm" novalidate>
+    <div class="form-grid">
+        <input type="hidden" name="subject" value="New Project Submission - Portfolio">
+
+        <div class="form-group">
+            <label for="clientName">Name</label>
+            <input type="text" 
+                   id="clientName" 
+                   name="from_name" 
+                   required 
+                   maxlength="100"
+                   aria-describedby="name-help">
+            <small id="name-help" class="help-text">Full name or company name</small>
+        </div>
+
+        <div class="form-group">
+            <label for="clientEmail">Email</label>
+            <input type="email" 
+                   id="clientEmail" 
+                   name="user_email" 
+                   required 
+                   aria-describedby="email-help">
+            <small id="email-help" class="help-text">We'll reply within 24 hours</small>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="projectDesc">Project Description</label>
+        <textarea id="projectDesc" 
+                  name="projectDesc" 
+                  rows="5" 
+                  placeholder="Tell me about your project vision..." 
+                  required 
+                  maxlength="4000"></textarea>
+    </div>
+
+    <div class="form-group">
+        <label for="projectFiles">Upload Files (Optional)</label>
+        <input type="file" id="projectFiles" name="files" multiple>
+        <div class="file-preview">No files selected</div>
+    </div>
+
+    <button type="submit" class="submit-btn cursor-link">
+        <span class="btn-text">Submit Project →</span>
+        <span class="btn-loading" aria-hidden="true">Sending...</span>
+    </button>
+</form>
         </div>
     </section>
 
@@ -343,61 +303,41 @@
         Single column layout
     -->
     <section class="contact" id="contact" aria-labelledby="contact-heading">
-        <div class="container">
-            <h2 class="section-title" id="contact-heading">Get In Touch</h2>
-            <!-- 
-                CONTACT INFO GRID - Info + form
-                Stacks vertically on mobile
-            -->
-            <div class="contact-grid">
-                <!-- 
-                    CONTACT DETAILS
-                    Primary email prominent
-                    Additional methods planned
-                -->
-                <div class="contact-info">
-                    <p class="contact-email">
-                        <strong>📧 Primary:</strong><br>
-                        creatorofwebsites57@gmail.com
-                    </p>
-                    <!-- 
-                        Future expansion points
-                        Phone, Calendly, social links
-                    -->
-                    <p class="contact-secondary">
-                        <strong>🌐 Studio:</strong> hello@pixelcraft.design<br>
-                        <strong>📅</strong> Available M-F 9AM-6PM EST
-                    </p>
-                </div>
-                <!-- 
-                    CONTACT FORM - Lightweight
-                    Email + message only
-                    Same styling as main form
-                -->
-                <form class="contact-form" id="contactForm" novalidate>
-                    <div class="form-group">
-                        <label for="contactEmail">Your Email</label>
-                        <input type="email" 
-                               id="contactEmail" 
-                               name="user_email" 
-                               placeholder="your@email.com" 
-                               required>
-                    </div>
-                    <div class="form-group">
-                        <label for="contactMessage">Your Message</label>
-                        <textarea id="contactMessage" 
-                                  name="message" 
-                                  rows="4" 
-                                  placeholder="Quick question about pricing, timeline, or project ideas..."
-                                  required></textarea>
-                    </div>
-                    <button type="submit" class="submit-btn cursor-link">
-                        Send Message
-                    </button>
-                </form>
+    <div class="container">
+        <h2 class="section-title" id="contact-heading">Get In Touch</h2>
+        <div class="contact-grid">
+            <div class="contact-info">
+                <p class="contact-email">
+                    <strong>📧 Primary:</strong><br>
+                    creatorofwebsites57@gmail.com
+                </p>
+                <p class="contact-secondary">
+                    <strong>Whatsapp:</strong> +977 9841224347<br>
+                    <strong>📅</strong> Sun-Fri 9AM-6PM 
+                </p>
             </div>
+            <form class="contact-form" id="contactForm" novalidate>
+                <input type="hidden" name="subject" value="General Inquiry - Portfolio">
+                
+                <div class="form-group">
+                    <label for="contactName">Your Name</label>
+                    <input type="text" id="contactName" name="from_name" placeholder="Name" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="contactEmail">Your Email</label>
+                    <input type="email" id="contactEmail" name="user_email" placeholder="your@email.com" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="contactMessage">Your Message</label>
+                    <textarea id="contactMessage" name="message" rows="4" placeholder="Quick question..." required></textarea>
+                </div>
+                <button type="submit" class="submit-btn cursor-link">Send Message</button>
+            </form>
         </div>
-    </section>
+    </div>
+</section>
 
     <!-- 
         FOOTER - Minimal branding
@@ -405,7 +345,7 @@
     -->
     <footer class="footer">
         <div class="container">
-            <p>&copy; 2024 PixelCraft Web Design. All rights reserved.</p>
+            <p>&copy; 2026 PixelCraft Web Design. All rights reserved.</p>
         </div>
     </footer>
 
